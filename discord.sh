@@ -8,17 +8,17 @@ download(){
 }
 
 if [[ $my_version == "1" ]]; then
-	echo "Voce não tem o discord instalado"
-	echo "Iniciando instalação..."
+	echo "You do not have Discord Installed"
+	echo "Starting installation..."
 	download
 else
 	valido=$(curl -s https://discord.com/api/download/stable?platform=linux | grep "$my_version")
 	if [ -z "$valido" ]; then
-		echo 'Atualizando discord.....'
+		echo 'updating discord.....'
 		download
-		echo "atualização finalizada"
+		echo "update finilly"
 	else
-		echo "sem atualizacao no momento"
+		echo "no update available"
 	fi
 fi
 
