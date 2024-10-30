@@ -18,6 +18,11 @@ I created a task on crontab to exec this script for me and I boot my system, you
 2) Add this line:
 `@reboot "PATH OF THE SCRIPT"` -- I created on /usr/bin/discord
 
+## Upgrade
+
+Now this script create logs no jorunalctl. If you want to see when and what the script did. you just need to execution this command:
+`journalctl --facility local7`
+
 ## How this work
 
 This is just a simple BASH script. I made this in 10 minutos and may I will upgranding with new functionality in the future.
