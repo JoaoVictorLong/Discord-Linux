@@ -21,5 +21,4 @@ I created a task on crontab to exec this script for me and I boot my system, you
 ## How this work
 
 This is just a simple BASH script. I made this in 10 minutos and may I will upgranding with new functionality in the future.
-The program was right in Portuguese, but I will change to ingle.
-
+The program was right in Portuguese, but I will change to english.
