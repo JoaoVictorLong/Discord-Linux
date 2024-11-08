@@ -16,11 +16,7 @@ download(){
 # }
 
 create_systemd_time(){
-	#create directory to systemd and copy the file to /usr/share/discord
-
-	mkdir /usr/share/discord/ 
-	cp $PWD/discord.sh /usr/share/discord
-
+	
 	# Create files to systemd timer and service
 	cat <<-EOT > /etc/systemd/system/discord.timer
 	[Unit]
@@ -57,8 +53,10 @@ if [[ $my_version == "1" ]]; then
 	create_systemd_time
 	echo "this get some time...."
 	download
+	#copy scritp to discord directory
+	cp $PWD/discord.sh /usr/share/discord
 	echo "Discord installed"
-	log "Discord installed"
+	#log "Discord installed"
 else
 	valido=$(curl -s https://discord.com/api/download/stable?platform=linux | grep "$my_version")
 	if [ -z "$valido" ]; then

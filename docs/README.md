@@ -6,24 +6,28 @@
 [![Static Badge](https://img.shields.io/badge/linkedin-blue?logo=linkedin)](https://www.linkedin.com/in/joaovictorlong/)
 
 ## About
-I created this script because Discord doesn't have repository to upgrade or download the application, so to be better doing this, I create this simple script.
+I created this script because Discord doesn't offer a repository to easily upgrade or download the application. To make this process simpler, I created this script.
 
 ## How used
-You need just clone this repo and get it a permission, this can be:
+1) Clone this repository.
+`git clone https://github.com/JoaoVictorLong/Discord-Linux`
+
+
+2) Grant execute permissions to the script.
 `chmod 740 discord.sh`
 
-I created a task on crontab to exec this script for me and I boot my system, you can do the same on your
-1) Execution this command:
-`crontab -e`
-2) Add this line:
-`@reboot "PATH OF THE SCRIPT"` -- I created on /usr/bin/discord
+3) Run the script with:
+`sudo ./discord.sh` 
+
+The script will create a scheduled task in systemd, download Discord if it’s not installed, or update it if it’s already installed.
+
+The script copies itself to the /usr/share/discord directory so that systemd knows where to locate it.
 
 ## Upgrade
 
-Now this script create logs no jorunalctl. If you want to see when and what the script did. you just need to execution this command:
-`journalctl --facility local7`
+The script sets up a systemd service and timer to automatically run one minute after each system boot, checking for updates.
 
 ## How this work
 
-This is just a simple BASH script. I made this in 10 minutos and may I will upgranding with new functionality in the future.
-The program was right in Portuguese, but I will change to english.
+This is a simple Bash script that I initially developed in about 10 minutes. I may add new functionality in the future.
+Currently, the program outputs messages in Portuguese, but I plan to translate it to English soon.
