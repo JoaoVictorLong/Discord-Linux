@@ -2,7 +2,7 @@
 
 my_version=$(dpkg-query -f '${Version}' -W 'discord' || echo "1")
 download(){
-	cd /etc/systemd/system/discord/
+	cd /var/
 	wget 'https://discord.com/api/download/stable?platform=linux&format=deb' -O discord
 	dpkg -i discord
 	rm discord
@@ -14,32 +14,38 @@ log(){
 }
 
 create_systemd_time(){
-	mkdir /etc/systemd/system/discord
-	cat <<-EOT > /etc/systemd/system/discord/discord@.timer
+	#create directorys to systemd and copy the file script to one place
+
+	mkdir /usr/share/discord/
+	cp $PWD/discord.sh /usr/share/discord
+	# Create files to systemd timer and service
+	cat <<-EOT > /etc/systemd/system/discord.timer
 	[Unit]
 	Description=Discord upgrades
 
 	[Timer]
 	OnBootSec=1min
-	AccurancySec=1s
-	Unit=discord.target
+	AccuracySec=1
+	Unit=discord.service
+
+	[Install]
+	WantedBy=timers.target
 	EOT
 
-	cat <<-EOT > /etc/systemd/system//discord/discord.service
+	cat <<-EOT > /etc/systemd/system/discord.service
 	[Unit]
 	Description=Discord upgrades
 
 	[Service]
 	Type=oneshot
-	DefaultDependencies=no
-	ExecStart=/etc/systemd/system/discord/discord.sh
+	ExecStart=/usr/share/discord/discord.sh
 	EOT
-	cp $PWD/discord.sh /etc/systemd/system/discord/
 }
 
 if [[ $my_version == "1" ]]; then
 	echo "You do not have Discord Installed"
 	echo "Starting installation..."
+	create_systemd_time
 	download
 	echo "Discord installed"
 	log "Discord installed"
