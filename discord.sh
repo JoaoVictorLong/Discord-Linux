@@ -1,9 +1,11 @@
 #!/bin/bash
 
-my_version=$(dpkg-query -f '${Version}' -W 'discord' || echo "1")
+##Get the version of discord and with if it's alright installed
+my_version=$(dpkg-query -f '${Version}' -W 'discord' &> /dev/null || echo "1")
+
 download(){
 	cd /var/
-	wget 'https://discord.com/api/download/stable?platform=linux&format=deb' -O discord
+	wget 'https://discord.com/api/download/stable?platform=linux&format=deb' -O discord &> /dev/null 
 	dpkg -i discord
 	rm discord
 	cd -
@@ -14,10 +16,11 @@ log(){
 }
 
 create_systemd_time(){
-	#create directorys to systemd and copy the file script to one place
+	#create directory to systemd and copy the file to /usr/share/discord
 
-	mkdir /usr/share/discord/
+	mkdir /usr/share/discord/ 
 	cp $PWD/discord.sh /usr/share/discord
+
 	# Create files to systemd timer and service
 	cat <<-EOT > /etc/systemd/system/discord.timer
 	[Unit]
@@ -43,8 +46,9 @@ create_systemd_time(){
 	[Install]
 	WantedBy=multi-user.target
 	EOT
-	systemctl enable discord.timer
-	systemctl enable discord.service
+	systemctl daemon-reload && echo "Reload daemon systemd" || echo "Error on: systemctl daemon-reload"
+	systemctl enable discord.timer && echo "Enable discord.timer" || echo "Error on: systemctl enable discord.timer"
+	systemctl enable discord.service && echo "Enable discord.service" || echo "Error on: systemctl enable discord.service"
 }
 
 if [[ $my_version == "1" ]]; then
