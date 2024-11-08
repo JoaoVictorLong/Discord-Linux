@@ -11,9 +11,9 @@ download(){
 	cd -
 }
 
-log(){
-	logger -t Discord -p local7.info "$1" 
-}
+# log(){
+# 	logger -t Discord -p local7.info "$1" 
+# }
 
 create_systemd_time(){
 	#create directory to systemd and copy the file to /usr/share/discord
@@ -65,10 +65,10 @@ else
 		echo 'updating discord.....'
 		download
 		echo "update finilly"
-		log "update finilly"
+		#log "update finilly"
 	else
 		echo "no update available"
-		log "no update available"
+		#log "no update available"
 	fi
 fi
 
