@@ -29,9 +29,12 @@ create_systemd_time(){
 	[Unit]
 	Description=Discord upgrades
 
+	[Service]
+	Type=oneshot
 	DefaultDependencies=no
 	ExecStart=/etc/systemd/system/discord/discord.sh
 	EOT
+	cp $PWD/discord.sh /etc/systemd/system/discord/
 }
 
 if [[ $my_version == "1" ]]; then
