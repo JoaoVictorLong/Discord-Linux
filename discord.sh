@@ -40,6 +40,8 @@ create_systemd_time(){
 	Type=oneshot
 	ExecStart=/usr/share/discord/discord.sh
 	EOT
+	systemctl enable discord.timer
+	systemctl enable discord.service
 }
 
 if [[ $my_version == "1" ]]; then
