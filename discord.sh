@@ -39,6 +39,9 @@ create_systemd_time(){
 	[Service]
 	Type=oneshot
 	ExecStart=/usr/share/discord/discord.sh
+
+	[Install]
+	WantedBy=multi-user.target
 	EOT
 	systemctl enable discord.timer
 	systemctl enable discord.service
