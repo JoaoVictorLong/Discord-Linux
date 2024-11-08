@@ -6,7 +6,7 @@ my_version=$(dpkg-query -f '${Version}' -W 'discord' &> /dev/null || echo "1")
 download(){
 	cd /var/
 	wget 'https://discord.com/api/download/stable?platform=linux&format=deb' -O discord &> /dev/null 
-	dpkg -i discord
+	dpkg -i discord &> /dev/null
 	rm discord
 	cd -
 }
@@ -53,8 +53,9 @@ create_systemd_time(){
 
 if [[ $my_version == "1" ]]; then
 	echo "You do not have Discord Installed"
-	echo "Starting installation..."
+	echo "Starting download and installation..."
 	create_systemd_time
+	echo "this get some time...."
 	download
 	echo "Discord installed"
 	log "Discord installed"
