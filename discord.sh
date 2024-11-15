@@ -6,11 +6,12 @@ my_version=$(dpkg-query -f '${Version}' -W 'discord' 2> /dev/null || echo "1")
 download(){
 	#validar porque script nao consegue ir para o /var
 	##scritp precisa ser rodado como root por conta do dpkg
-	cd /var/
-	wget 'https://discord.com/api/download/stable?platform=linux&format=deb' -O discord &> /dev/null 
-	dpkg -i discord &> /dev/null
-	rm discord
-	cd -
+	#cd /var/
+	#get 'https://discord.com/api/download/stable?platform=linux&format=deb' -O discord &> /dev/null 
+	get 'https://discord.com/api/download/stable?platform=linux&format=deb' -O - > /tmp/discord.deb 
+	dpkg -i /tmp/discord.deb 1> /dev/null || if [[ $? == 2 ]]; then echo "Please run as root"; fi
+	rm /tmp/discord.deb
+	#cd -
 }
 
 # log(){
@@ -71,4 +72,3 @@ else
 		#log "no update available"
 	fi
 fi
-
